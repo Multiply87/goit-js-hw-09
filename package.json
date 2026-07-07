@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/goit-js-hw-09/",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "git add . && git commit -m \"deploy\" && git push"
   },
   "devDependencies": {
     "glob": "^11.0.0",
@@ -17,6 +18,7 @@
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "simplelightbox": "^2.14.3",
     "vite-plugin-full-reload": "^1.2.0",
     "vite-plugin-html-inject": "^1.1.2"
   }
