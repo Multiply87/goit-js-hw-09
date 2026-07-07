@@ -1,4 +1,5 @@
-const formData = new FormData(document.querySelector(".feedback-form"));
+const form = document.querySelector('.feedback-form');
+const formData = {};
 
 document.addEventListener("DOMContentLoaded", () => {
   loadFormData();
@@ -6,21 +7,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setHandlerForm() {
-  document.querySelector(".feedback-form").addEventListener("input", (event) => {
+  form.addEventListener("input", (event) => {
     const target = event.target;
-    formData.set(target.name, target.value);
-    localStorage.setItem("feedback-form-state", JSON.stringify(Object.fromEntries(formData)));    
+    formData[target.name] = target.value;
+    localStorage.setItem("feedback-form-state", JSON.stringify(formData));    
   });
 
   document.querySelector(".feedback-form").addEventListener("submit", (event) => {
     event.preventDefault();
-    if (!formData.has("email") || !formData.has("message")) {
+    if (!formData.email?.trim() || !formData.message?.trim()) {
       alert("Fill please all fields");
       return;
     }
-    alert(JSON.stringify(Object.fromEntries(formData)));
-    formData.delete("email");
-    formData.delete("message");
+    console.log(formData);
+    formData.email = "";
+    formData.message = "";
     localStorage.removeItem("feedback-form-state");
     document.querySelector(".feedback-form").reset();
   });
@@ -31,7 +32,7 @@ function loadFormData() {
   if (savedData) {
     const parsedData = JSON.parse(savedData);
     for (const [name, value] of Object.entries(parsedData)) {
-      formData.set(name, value);
+      formData[name] = value;
       const input = document.querySelector(`.feedback-form [name="${name}"]`);
       if (input) {
         input.value = value;
